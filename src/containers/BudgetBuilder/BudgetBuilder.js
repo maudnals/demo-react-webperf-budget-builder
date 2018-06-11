@@ -5,26 +5,21 @@ class BudgetBuilder extends Component {
 
   state = {
     price: 0,
-    resources: [
-      {
-        name: "html",
-        count: 0
-      },
-      {
-        name: "css",
-        count: 0
-      },
-    ]
+    resources: {
+      html: 10,
+      css: 0,
+      bundle: 0,
+      ads: 0,
+    }
   }
 
   render() {
     return (
       <Fragment>
-        Budget builder!
+        <Budget resources={this.state.resources} />
         <div>
-          <Budget/>
-        </div>
-        <div>controls</div>
+          controls
+          </div>
       </Fragment>
     )
   }

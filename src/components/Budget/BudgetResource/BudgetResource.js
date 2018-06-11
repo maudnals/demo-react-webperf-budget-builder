@@ -30,7 +30,6 @@ class BudgetResource extends Component {
     let resClass = [ colorClass, classes.Box].join(' ');
     return (
       <div className={resClass}>
-        {this.props.name}
       </div>
     );
   }
