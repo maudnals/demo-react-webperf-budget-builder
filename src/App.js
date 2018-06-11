@@ -1,13 +1,15 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import Layout from './components/Layout/Layout';
+import BudgetBuilder from './containers/BudgetBuilder/BudgetBuilder';
 
 class App extends Component {
+
   render() {
     return (
       <div>
         <h1>Perf budget builder :)</h1>
         <Layout>
-          burger builder
+          <BudgetBuilder/>
         </Layout>
       </div>
     );
