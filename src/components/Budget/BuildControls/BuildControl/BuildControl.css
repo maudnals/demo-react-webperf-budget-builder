@@ -27,14 +27,23 @@
   cursor: pointer;
   background: white;
   border-radius: 100rem;
-  border: solid 1px gainsboro;
+  border: solid 1.8px rgb(20, 20, 20);
   margin: 0.2rem;
   width: var(--size);
   height: var(--size);
-  font-size: 108%;
+  font-size: 103%;
   transition: background 0.2s ease-out;
 }
 
 .Button:hover {
   background: whitesmoke;
+}
+
+.Button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.Button:disabled:hover {
+  background: inherit;
 }

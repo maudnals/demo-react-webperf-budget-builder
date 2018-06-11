@@ -7,9 +7,3 @@
   width: 20rem;
   height: 30rem;
 }
-
-@media screen and (min-width: 600px) {
-  .Budget {
-    font-size: 1.2rem;
-  }
-}

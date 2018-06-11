@@ -15,21 +15,24 @@ class BudgetBuilder extends Component {
     }
   }
 
-  clickPlusHandler = (resource, event) => {
-    this.updateResourceCount(resource, +1);
+  addResourceHandler = (resourceType, event) => {
+    this.updateResourceCount(resourceType, +1);
   }
 
-  clickMinusHandler = (resource, event) => {
-    this.updateResourceCount(resource, -1);
+  removeResourceHandler = (resourceType, event) => {
+    this.updateResourceCount(resourceType, -1);
   }
 
-  updateResourceCount = (resource, offset) => {
+  updateResourceCount = (resourceType, offset) => {
     this.setState((prevState) => {
       return {
-        ...prevState,
         resources: {
           ...prevState.resources,
-          [resource.toString()]: prevState.resources[resource] + offset < 0 ? 0 : prevState.resources[resource] + offset
+          [resourceType.toString()]:
+            prevState.resources[resourceType] + offset < 0 ?
+              0
+              :
+              prevState.resources[resourceType] + offset
         }
       }
     });
@@ -44,8 +47,8 @@ class BudgetBuilder extends Component {
         <div>
           <BuildControls
             resources={this.state.resources}
-            clickPlusHandler={this.clickPlusHandler}
-            clickMinusHandler={this.clickMinusHandler}
+            addResourceHandler={this.addResourceHandler}
+            removeResourceHandler={this.removeResourceHandler}
           />
         </div>
       </div>
