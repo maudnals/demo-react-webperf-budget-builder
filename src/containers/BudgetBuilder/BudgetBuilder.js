@@ -1,5 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Budget from '../../components/Budget/Budget';
+import BuildControls from '../../components/Budget/BuildControls/BuildControls';
+import classes from './BudgetBuilder.css';
 
 class BudgetBuilder extends Component {
 
@@ -7,20 +9,46 @@ class BudgetBuilder extends Component {
     price: 0,
     resources: {
       html: 10,
-      css: 0,
+      css: 3,
       bundle: 0,
       ads: 0,
     }
   }
 
+  clickPlusHandler = (resource, event) => {
+    this.updateResourceCount(resource, +1);
+  }
+
+  clickMinusHandler = (resource, event) => {
+    this.updateResourceCount(resource, -1);
+  }
+
+  updateResourceCount = (resource, offset) => {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        resources: {
+          ...prevState.resources,
+          [resource.toString()]: prevState.resources[resource] + offset < 0 ? 0 : prevState.resources[resource] + offset
+        }
+      }
+    });
+  }
+
   render() {
     return (
-      <Fragment>
-        <Budget resources={this.state.resources} />
+      <div className={classes.BudgetBuilder}>
         <div>
-          controls
-          </div>
-      </Fragment>
+          <Budget resources={this.state.resources} />
+        </div>
+        <div>
+          <BuildControls
+            resources={this.state.resources}
+            clickPlusHandler={this.clickPlusHandler}
+            clickMinusHandler={this.clickMinusHandler}
+          />
+        </div>
+      </div>
     )
   }
 }

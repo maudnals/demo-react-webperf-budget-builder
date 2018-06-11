@@ -10,15 +10,12 @@ const budget = (props) => {
         .map((_, index) => {
           return <BudgetResource type={k} name={k} key={k + index} />;
         });
-    });
+    })
+    .reduce((accumulator, currentvalue) => {
+      return [...accumulator, ...currentvalue];
+    }, []);
 
-  const resourcesCount = Object.keys(props.resources)
-    .reduce((accumulator, currentIndex) => {
-      return accumulator + props.resources[currentIndex];
-    }, 0);
-
-
-  const callToAction = resourcesCount ?
+  const callToAction = resources.length > 0 ?
     null
     :
     "Add resources";

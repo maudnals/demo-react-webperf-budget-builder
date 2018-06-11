@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 class BudgetResource extends Component {
 
   render() {
-    let resource = null;
     let colorClass = classes.Default;
     switch (this.props.type) {
       case ("html"):
@@ -17,8 +16,8 @@ class BudgetResource extends Component {
       case "css":
         colorClass = classes.Css;
         break;
-      case "ad":
-        colorClass = classes.Ad;
+      case "ads":
+        colorClass = classes.Ads;
         break;
       case "img":
         colorClass = classes.Img;
