@@ -1,21 +1,29 @@
 import React, { Component, Fragment } from 'react';
+import Budget from '../../components/Budget/Budget';
 
 class BudgetBuilder extends Component {
 
   state = {
     price: 0,
-    ingredients: [
+    resources: [
       {
-        salad: 0
-      }
+        name: "html",
+        count: 0
+      },
+      {
+        name: "css",
+        count: 0
+      },
     ]
   }
 
   render() {
-    return(
+    return (
       <Fragment>
         Budget builder!
-        <div>budget preview</div>
+        <div>
+          <Budget/>
+        </div>
         <div>controls</div>
       </Fragment>
     )

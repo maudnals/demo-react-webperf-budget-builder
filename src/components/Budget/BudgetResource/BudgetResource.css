@@ -1,0 +1,28 @@
+.Box {
+  padding: 0.6rem;
+  margin: 0.2rem;
+}
+
+.Html {
+  background: rgb(212, 138, 0);
+}
+
+.Css {
+  background: purple;
+}
+
+.Ad {
+  background: red;
+}
+
+.Img {
+  background: green;
+}
+
+.Bundle {
+  background: blue;
+}
+
+.Default {
+  background: lightgrey;
+}
