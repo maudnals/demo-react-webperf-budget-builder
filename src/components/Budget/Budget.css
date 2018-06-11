@@ -1,0 +1,12 @@
+.Budget {
+  background: whitesmoke;
+  padding: 2rem;
+  margin: 0 auto;
+  font-size: 1.2rem;
+}
+
+@media screen and (min-width: 600px) {
+  .Budget {
+    font-size: 1rem;
+  }
+}
