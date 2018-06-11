@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Budget from '../../components/Budget/Budget';
 import BuildControls from '../../components/Budget/BuildControls/BuildControls';
+import Modal from '../../components/utils/Modal/Modal';
 import classes from './BudgetBuilder.css';
 
 class BudgetBuilder extends Component {
@@ -51,6 +52,9 @@ class BudgetBuilder extends Component {
             removeResourceHandler={this.removeResourceHandler}
           />
         </div>
+        <Modal>
+          Order successful
+        </Modal>
       </div>
     )
   }

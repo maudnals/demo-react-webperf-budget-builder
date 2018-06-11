@@ -1,0 +1,12 @@
+.Modal {
+  --width: 40vw;
+  --height: 40vh;
+  width: var(--width);
+  height: var(--height);
+  position: fixed;
+  top: calc((100vh - var(--height)) / 2);
+  left: calc((100vw - var(--width)) / 2);
+  background: white;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.10);
+  padding: 2rem;
+}
