@@ -1,39 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './BudgetResource.css';
+import PropTypes from 'prop-types';
 
-const budgetResource = (props) => {
+class BudgetResource extends Component {
 
-  let resource = null;
-  let colorClass = classes.Default;
-
-  switch (props.type) {
-    case ("html"):
-      colorClass = classes.Html;
-      break;
-    case "bundle":
-      colorClass = classes.Bundle;
-      break;
-    case "css":
-      colorClass = classes.Css;
-      break;
-    case "ad":
-      colorClass = classes.Ad;
-      break;
-    case "img":
-      colorClass = classes.Img;
-      break;
-    default:
-      colorClass = classes.Default;
+  render() {
+    let resource = null;
+    let colorClass = classes.Default;
+    switch (this.props.type) {
+      case ("html"):
+        colorClass = classes.Html;
+        break;
+      case "bundle":
+        colorClass = classes.Bundle;
+        break;
+      case "css":
+        colorClass = classes.Css;
+        break;
+      case "ad":
+        colorClass = classes.Ad;
+        break;
+      case "img":
+        colorClass = classes.Img;
+        break;
+      default:
+        colorClass = classes.Default;
+    }
+  
+    let resClass = [ colorClass, classes.Box].join(' ');
+    return (
+      <div className={resClass}>
+        {this.props.name}
+      </div>
+    );
   }
-
-  let resClass = [ colorClass, classes.Box].join(' ');
-
-  return (
-    <div className={resClass}>
-      {props.name}
-    </div>
-  );
 }
 
+BudgetResource.propTypes = {
+  type: PropTypes.string.isRequired
+};
 
-export default budgetResource;
+
+export default BudgetResource;
