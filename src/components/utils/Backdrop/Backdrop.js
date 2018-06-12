@@ -4,7 +4,8 @@ import classes from './Backdrop.css';
 const backdrop = (props) => {
   let backdropEl = null;
   if (props.visible) {
-    backdropEl = <div className={classes.Backdrop}></div>
+    backdropEl = 
+    (<div onClick={props.closeModalHandler} className={classes.Backdrop}></div>)
   }
   return backdropEl;
 }

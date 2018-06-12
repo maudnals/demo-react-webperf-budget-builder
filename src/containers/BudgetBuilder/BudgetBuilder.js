@@ -95,6 +95,13 @@ class BudgetBuilder extends Component {
       });
   }
 
+  closeModalHandler = () => {
+    console.log("dhgfhedf");
+    this.setState({
+      ordering: false
+    });
+  }
+
   render() {
     return (
       <div className={classes.BudgetBuilder}>
@@ -111,7 +118,7 @@ class BudgetBuilder extends Component {
             orderable={this.state.orderable}
           />
         </div>
-        <Modal visible={this.state.ordering}>
+        <Modal closeModalHandler={this.closeModalHandler} visible={this.state.ordering}>
           <OrderSummary
             resources={this.state.resources}
             orderStepOneHandler={this.orderStepOneHandler}>
