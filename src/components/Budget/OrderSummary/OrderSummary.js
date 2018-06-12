@@ -16,8 +16,12 @@ const orderSummary = (props) => {
       <ul>
         {resourcesList}
       </ul>
+      <p>Continue?</p>
       <button onClick={props.orderStepOneHandler}>
-        Continue to checkout
+        Continue
+      </button>
+      <button onClick={props.cancelOrderHandler}>
+        Cancel
       </button>
     </Fragment>
   )

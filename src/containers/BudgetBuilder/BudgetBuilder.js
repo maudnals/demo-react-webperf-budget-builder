@@ -121,6 +121,7 @@ class BudgetBuilder extends Component {
         <Modal closeModalHandler={this.closeModalHandler} visible={this.state.ordering}>
           <OrderSummary
             resources={this.state.resources}
+            cancelOrderHandler={this.closeModalHandler}
             orderStepOneHandler={this.orderStepOneHandler}>
           </OrderSummary>
         </Modal>
