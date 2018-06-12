@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import classes from './Modal.css';
+import Backdrop from '../Backdrop/Backdrop';
 
 const modal = (props) => {
   const modalClass = props.visible ?
@@ -8,9 +9,12 @@ const modal = (props) => {
     [classes.Hidden, classes.Modal].join(' ');
 
   return (
-    <div className={modalClass}>
-      {props.children}
-    </div>
+    <Fragment>
+      <Backdrop visible={props.visible}></Backdrop>
+      <div className={modalClass}>
+        {props.children}
+      </div>
+    </Fragment>
   );
 }
 

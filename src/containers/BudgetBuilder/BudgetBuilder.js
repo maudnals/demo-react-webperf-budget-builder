@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Budget from '../../components/Budget/Budget';
 import BuildControls from '../../components/Budget/BuildControls/BuildControls';
 import Modal from '../../components/utils/Modal/Modal';
+import Backdrop from '../../components/utils/Backdrop/Backdrop';
 import OrderSummary from '../../components/Budget/OrderSummary/OrderSummary';
 import classes from './BudgetBuilder.css';
 
