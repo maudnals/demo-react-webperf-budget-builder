@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Budget from '../../components/Budget/Budget';
 import BuildControls from '../../components/Budget/BuildControls/BuildControls';
 import Modal from '../../components/utils/Modal/Modal';
-import Backdrop from '../../components/utils/Backdrop/Backdrop';
 import OrderSummary from '../../components/Budget/OrderSummary/OrderSummary';
 import classes from './BudgetBuilder.css';
+import axiosOrders from '../../axios-orders';
 
 const INGREDIENT_PRICES = {
   html: 0.5,
@@ -83,6 +83,18 @@ class BudgetBuilder extends Component {
     });
   }
 
+  orderStepOneHandler = () => {
+    console.log("order");
+    axiosOrders.post('/orders.json', {
+      resources: this.state.resources,
+      price: this.state.totalPrice
+    }).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <div className={classes.BudgetBuilder}>
@@ -101,7 +113,8 @@ class BudgetBuilder extends Component {
         </div>
         <Modal visible={this.state.ordering}>
           <OrderSummary
-            resources={this.state.resources}>
+            resources={this.state.resources}
+            orderStepOneHandler={this.orderStepOneHandler}>
           </OrderSummary>
         </Modal>
       </div>
