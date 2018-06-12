@@ -5,10 +5,17 @@ import Modal from '../../components/utils/Modal/Modal';
 import OrderSummary from '../../components/Budget/OrderSummary/OrderSummary';
 import classes from './BudgetBuilder.css';
 
+const INGREDIENT_PRICES = {
+  html: 0.5,
+  css: 0.8,
+  bundle: 1.6,
+  ads: 0.2,
+}
+
 class BudgetBuilder extends Component {
 
   state = {
-    price: 0,
+    totalPrice: 0,
     resources: {
       html: 10,
       css: 3,
@@ -38,6 +45,18 @@ class BudgetBuilder extends Component {
         }
       }
     });
+    this.updatePrice();
+  }
+
+  updatePrice = () => {
+    const totalPrice = Object
+      .keys(this.state.resources)
+      .reduce((acc, resource) => {
+        return acc + INGREDIENT_PRICES[resource] * this.state.resources[resource];
+      }, parseFloat(this.state.totalPrice));
+    this.setState({
+      totalPrice: totalPrice.toFixed(2)
+    })
   }
 
   render() {
@@ -46,6 +65,7 @@ class BudgetBuilder extends Component {
         <div>
           <Budget resources={this.state.resources} />
         </div>
+        {this.state.totalPrice}
         <div>
           <BuildControls
             resources={this.state.resources}
