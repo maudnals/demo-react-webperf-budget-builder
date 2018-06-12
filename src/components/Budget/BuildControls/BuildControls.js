@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import BuildControl from './BuildControl/BuildControl';
+import classes from './BuildControls.css';
 
 const buildControls = (props) => {
-  return Object.keys(props.resources).map(k => {
+  const controls = Object.keys(props.resources).map(k => {
     return (
       <BuildControl
         key={k}
@@ -12,6 +13,23 @@ const buildControls = (props) => {
         removeResourceHandler={props.removeResourceHandler.bind(this, k)} />
     );
   });
+
+  const orderButtonClass = props.orderable ?
+    [classes.Button, classes.Ok].join(' ')
+    :
+    [classes.Button, classes.NOk].join(' ');
+
+  return (
+    <Fragment>
+      <div>
+        Price: {props.totalPrice}
+      </div>
+      {controls}
+      <button className={orderButtonClass}>
+        Order now
+      </button>
+    </Fragment>
+  )
 }
 
 export default buildControls;

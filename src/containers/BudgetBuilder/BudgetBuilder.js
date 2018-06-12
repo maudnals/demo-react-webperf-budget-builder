@@ -12,16 +12,19 @@ const INGREDIENT_PRICES = {
   ads: 0.2,
 }
 
+const INITIAL_PRICE = 10;
+
 class BudgetBuilder extends Component {
 
   state = {
-    totalPrice: 0,
     resources: {
-      html: 10,
-      css: 3,
+      html: 0,
+      css: 0,
       bundle: 0,
       ads: 0,
-    }
+    },
+    totalPrice: INITIAL_PRICE,
+    orderable: false
   }
 
   addResourceHandler = (resourceType, event) => {
@@ -33,30 +36,44 @@ class BudgetBuilder extends Component {
   }
 
   updateResourceCount = (resourceType, offset) => {
+    const updatedResources = {
+      ...this.state.resources,
+      [resourceType.toString()]:
+        this.state.resources[resourceType] + offset < 0 ?
+          0
+          :
+          this.state.resources[resourceType] + offset
+    };
     this.setState((prevState) => {
       return {
-        resources: {
-          ...prevState.resources,
-          [resourceType.toString()]:
-            prevState.resources[resourceType] + offset < 0 ?
-              0
-              :
-              prevState.resources[resourceType] + offset
-        }
+        resources: updatedResources
       }
     });
-    this.updatePrice();
+    this.updatePrice(updatedResources);
+    this.updatePurchaseable(updatedResources);
   }
 
-  updatePrice = () => {
+  updatePrice = (updatedResources) => {
     const totalPrice = Object
-      .keys(this.state.resources)
+      .keys(updatedResources)
       .reduce((acc, resource) => {
-        return acc + INGREDIENT_PRICES[resource] * this.state.resources[resource];
-      }, parseFloat(this.state.totalPrice));
+        return acc + parseFloat(INGREDIENT_PRICES[resource] * updatedResources[resource]);
+      }, INITIAL_PRICE);
     this.setState({
       totalPrice: totalPrice.toFixed(2)
-    })
+    });
+  }
+
+  updatePurchaseable(updatedResources) {
+    const resourcesCount = Object
+      .keys(updatedResources)
+      .reduce((acc, resource) => {
+        return acc + updatedResources[resource];
+      }, 0);
+    console.log(resourcesCount);
+    this.setState({
+      orderable: resourcesCount > 0
+    });
   }
 
   render() {
@@ -65,19 +82,20 @@ class BudgetBuilder extends Component {
         <div>
           <Budget resources={this.state.resources} />
         </div>
-        {this.state.totalPrice}
         <div>
           <BuildControls
             resources={this.state.resources}
             addResourceHandler={this.addResourceHandler}
             removeResourceHandler={this.removeResourceHandler}
+            totalPrice={this.state.totalPrice}
+            orderable={this.state.orderable}
           />
         </div>
-        <Modal>
+        {/* <Modal>
           <OrderSummary
             resources={this.state.resources}>
           </OrderSummary>
-        </Modal>
+        </Modal> */}
       </div>
     )
   }
