@@ -24,7 +24,8 @@ class BudgetBuilder extends Component {
       ads: 0,
     },
     totalPrice: INITIAL_PRICE,
-    orderable: false
+    orderable: false,
+    ordering: false
   }
 
   addResourceHandler = (resourceType, event) => {
@@ -70,9 +71,14 @@ class BudgetBuilder extends Component {
       .reduce((acc, resource) => {
         return acc + updatedResources[resource];
       }, 0);
-    console.log(resourcesCount);
     this.setState({
       orderable: resourcesCount > 0
+    });
+  }
+
+  orderHandler = () => {
+    this.setState({
+      ordering: true
     });
   }
 
@@ -87,15 +93,16 @@ class BudgetBuilder extends Component {
             resources={this.state.resources}
             addResourceHandler={this.addResourceHandler}
             removeResourceHandler={this.removeResourceHandler}
+            orderHandler={this.orderHandler}
             totalPrice={this.state.totalPrice}
             orderable={this.state.orderable}
           />
         </div>
-        {/* <Modal>
+        <Modal visible={this.state.ordering}>
           <OrderSummary
             resources={this.state.resources}>
           </OrderSummary>
-        </Modal> */}
+        </Modal>
       </div>
     )
   }

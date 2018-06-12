@@ -25,7 +25,7 @@ const buildControls = (props) => {
         Price: {props.totalPrice}
       </div>
       {controls}
-      <button className={orderButtonClass}>
+      <button onClick={props.orderHandler} className={orderButtonClass}>
         Order now
       </button>
     </Fragment>

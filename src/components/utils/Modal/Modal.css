@@ -10,3 +10,11 @@
   box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.10);
   padding: 2rem;
 }
+
+.Hidden {
+  visibility: hidden;
+}
+
+.Visible {
+  visibility: visible;
+}
