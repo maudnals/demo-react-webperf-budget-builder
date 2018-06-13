@@ -7,7 +7,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Perf budget builder :)</h1>
         <Layout>
           <BudgetBuilder/>
         </Layout>
