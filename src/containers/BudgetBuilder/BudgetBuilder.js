@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Budget from '../../components/Budget/Budget';
 import BuildControls from '../../components/Budget/BuildControls/BuildControls';
 import Modal from '../../components/utils/Modal/Modal';
 import OrderSummary from '../../components/Budget/OrderSummary/OrderSummary';
 import classes from './BudgetBuilder.css';
 import axiosOrders from '../../axios-orders';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const INGREDIENT_PRICES = {
   html: 0.5,
@@ -18,16 +19,21 @@ const INITIAL_PRICE = 10;
 class BudgetBuilder extends Component {
 
   state = {
-    resources: {
-      html: 0,
-      css: 0,
-      bundle: 0,
-      ads: 0,
-    },
+    resources: null,
     totalPrice: INITIAL_PRICE,
     orderable: false,
     ordering: false,
     loading: false
+  }
+
+  componentDidMount() {
+    console.log("child did mount...");
+    axiosOrders.get('https://burger-builder-70aed.firebaseio.com/resources.jison')
+      .then(response => {
+        this.setState({
+          resources: response.data
+        })
+      });
   }
 
   addResourceHandler = (resourceType, event) => {
@@ -92,6 +98,7 @@ class BudgetBuilder extends Component {
       resources: this.state.resources,
       price: this.state.totalPrice
     }).then((response) => {
+      console.log("Order successful", response);
       this.setState({
         loading: false,
         ordering: false,
@@ -105,7 +112,6 @@ class BudgetBuilder extends Component {
   }
 
   closeModalHandler = () => {
-    console.log("dhgfhedf");
     this.setState({
       ordering: false
     });
@@ -117,25 +123,34 @@ class BudgetBuilder extends Component {
       <div>Ordering...</div>
       :
       <OrderSummary
-        resources={this.state.resources}
+        resources={this.state.resources ? this.state.resources : {}}
         cancelOrderHandler={this.closeModalHandler}
         orderStepOneHandler={this.orderStepOneHandler}>
       </OrderSummary>;
+
+    let budget = this.state.resources ?
+      (<Fragment>
+          <div>
+            <Budget resources={this.state.resources} />
+          </div>
+          <div>
+            <BuildControls
+              resources={this.state.resources}
+              addResourceHandler={this.addResourceHandler}
+              removeResourceHandler={this.removeResourceHandler}
+              orderHandler={this.orderHandler}
+              totalPrice={this.state.totalPrice}
+              orderable={this.state.orderable}
+            />
+          </div>
+        </Fragment>
+      )
+      :
+      <div>Loading...</div>;
+
     return (
       <div className={classes.BudgetBuilder}>
-        <div>
-          <Budget resources={this.state.resources} />
-        </div>
-        <div>
-          <BuildControls
-            resources={this.state.resources}
-            addResourceHandler={this.addResourceHandler}
-            removeResourceHandler={this.removeResourceHandler}
-            orderHandler={this.orderHandler}
-            totalPrice={this.state.totalPrice}
-            orderable={this.state.orderable}
-          />
-        </div>
+        {budget}
         <Modal
           closeModalHandler={this.closeModalHandler}
           visible={this.state.ordering}>
@@ -146,4 +161,4 @@ class BudgetBuilder extends Component {
   }
 }
 
-export default BudgetBuilder;
+export default withErrorHandler(BudgetBuilder, axiosOrders);
