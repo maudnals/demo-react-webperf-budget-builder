@@ -1,0 +1,11 @@
+.LogoWrapper {
+  --size: 3rem;
+  width: var(--size);
+  height: var(--size);
+}
+
+.LogoWrapper > img{
+  --size: 100%;
+  width: var(--size);
+  height: var(--size);
+}
