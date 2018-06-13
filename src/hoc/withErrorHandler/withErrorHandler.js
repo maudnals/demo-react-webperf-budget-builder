@@ -10,13 +10,13 @@ const withErrorHandler = (WrappedComponent, axiosOrders) => {
 
     componentWillMount() {
       console.log("parent will mount...");
-      axiosOrders.interceptors.request.use(req => {
+      this.requestInterceptor = axiosOrders.interceptors.request.use(req => {
         this.setState({
           error: null
         });
         return req;
       });
-      axiosOrders.interceptors.response.use(
+      this.responseInterceptor = axiosOrders.interceptors.response.use(
         res => res,
         error => {
           if (error) {
@@ -26,6 +26,11 @@ const withErrorHandler = (WrappedComponent, axiosOrders) => {
           }
           return Promise.reject(error);
         });
+    }
+
+    componentWillUnmount() {
+      axiosOrders.interceptors.request.eject(this.requestInterceptor);
+      axiosOrders.interceptors.request.eject(this.responseInterceptor);
     }
 
     okError = () => {

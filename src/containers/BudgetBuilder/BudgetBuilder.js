@@ -28,7 +28,7 @@ class BudgetBuilder extends Component {
 
   componentDidMount() {
     console.log("child did mount...");
-    axiosOrders.get('https://burger-builder-70aed.firebaseio.com/resources.jison')
+    axiosOrders.get('https://burger-builder-70aed.firebaseio.com/resources.json')
       .then(response => {
         this.setState({
           resources: response.data
