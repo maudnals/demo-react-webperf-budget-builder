@@ -26,7 +26,8 @@ class BudgetBuilder extends Component {
     },
     totalPrice: INITIAL_PRICE,
     orderable: false,
-    ordering: false
+    ordering: false,
+    loading: false
   }
 
   addResourceHandler = (resourceType, event) => {
@@ -84,15 +85,23 @@ class BudgetBuilder extends Component {
   }
 
   orderStepOneHandler = () => {
-    console.log("order");
+    this.setState({
+      loading: true
+    });
     axiosOrders.post('/orders.json', {
       resources: this.state.resources,
       price: this.state.totalPrice
-    }).then(function (response) {
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
+    }).then((response) => {
+      this.setState({
+        loading: false,
+        ordering: false,
       });
+    }).catch((error) => {
+      this.setState({
+        loading: false,
+        ordering: false,
+      });
+    });
   }
 
   closeModalHandler = () => {
@@ -103,6 +112,15 @@ class BudgetBuilder extends Component {
   }
 
   render() {
+
+    let orderSummary = this.state.loading ?
+      <div>Ordering...</div>
+      :
+      <OrderSummary
+        resources={this.state.resources}
+        cancelOrderHandler={this.closeModalHandler}
+        orderStepOneHandler={this.orderStepOneHandler}>
+      </OrderSummary>;
     return (
       <div className={classes.BudgetBuilder}>
         <div>
@@ -118,12 +136,10 @@ class BudgetBuilder extends Component {
             orderable={this.state.orderable}
           />
         </div>
-        <Modal closeModalHandler={this.closeModalHandler} visible={this.state.ordering}>
-          <OrderSummary
-            resources={this.state.resources}
-            cancelOrderHandler={this.closeModalHandler}
-            orderStepOneHandler={this.orderStepOneHandler}>
-          </OrderSummary>
+        <Modal
+          closeModalHandler={this.closeModalHandler}
+          visible={this.state.ordering}>
+          {orderSummary}
         </Modal>
       </div>
     )
